@@ -51,7 +51,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     control.getAnimationNames.foreach(println)
   }
 
-  def onAnimCycleDone(control:AnimControl, channel:AnimChannel, animName:String) {
+  def onAnimCycleDone(control:AnimControl, channel:AnimChannel, animName:String): Unit = {
     if (animName == "Walk") {
       channel.setAnim("stand", 0.50f)
       channel.setLoopMode(LoopMode.DontLoop)
@@ -59,18 +59,18 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     }
   }
  
-  def onAnimChange(control:AnimControl, channel:AnimChannel, animName:String) {
+  def onAnimChange(control:AnimControl, channel:AnimChannel, animName:String): Unit = {
     // unused
   }
  
   /** Custom Keybinding: Map named actions to inputs. */
-  private def initKeys() {
+  private def initKeys(): Unit = {
     inputManager.addMapping("Walk", new KeyTrigger(KeyInput.KEY_SPACE))
     inputManager.addListener(actionListener, "Walk")
   }
 
   val actionListener = new ActionListener {
-    def onAction(name:String, keyPressed:Boolean, tpf:Float) {
+    def onAction(name:String, keyPressed:Boolean, tpf:Float): Unit = {
       if (name == "Walk" && !keyPressed) {
         if (channel.getAnimationName() != "Walk") {
           channel.setAnim("Walk", 0.50f);

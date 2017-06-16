@@ -46,15 +46,15 @@ class HelloPicking extends SimpleApplication {
   }
 
   /** Declaring the "Shoot" action and mapping to its triggers. */
-  private def initKeys() {
+  private def initKeys(): Unit = {
     inputManager.addMapping("Shoot",
       new KeyTrigger(KeyInput.KEY_SPACE), // trigger 1: spacebar
-      new MouseButtonTrigger(MouseInput.BUTTON_LEFT)); // trigger 2: left-button click
-    inputManager.addListener(actionListener, "Shoot");
+      new MouseButtonTrigger(MouseInput.BUTTON_LEFT)) // trigger 2: left-button click
+    inputManager.addListener(actionListener, "Shoot")
   }
 
   val actionListener = new ActionListener {
-    def onAction(name:String, keyPressed:Boolean, tpf:Float) {
+    def onAction(name:String, keyPressed:Boolean, tpf:Float): Unit = {
       if (name == "Shoot" && !keyPressed) {
         // 1. Reset results list.
         val results = new CollisionResults()

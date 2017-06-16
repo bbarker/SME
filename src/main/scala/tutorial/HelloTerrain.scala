@@ -48,7 +48,8 @@ class HelloTerrain extends SimpleApplication {
  
     /** 2. Create the height map */
     val heightMapImage = assetManager.loadTexture("Textures/Terrain/splat/mountains512.png")
-    val heightmap = new ImageBasedHeightMap(ImageToAwt.convert(heightMapImage.getImage(), false, true, 0))
+    //    val heightmap = new ImageBasedHeightMap(ImageToAwt.convert(heightMapImage.getImage(), false, true, 0))
+    val heightmap = new ImageBasedHeightMap(heightMapImage.getImage())
     heightmap.load()
  
     /** 3. We have prepared material and heightmap. 
