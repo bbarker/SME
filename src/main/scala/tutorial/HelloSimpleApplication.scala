@@ -12,7 +12,7 @@ import com.jme3.scene.shape.Box
 class HelloSimpleApplication extends SimpleApplication {
  
   override def simpleInitApp: Unit = {
-    val b = new Box(Vector3f.ZERO, 1, 1, 1) // create cube shape at the origin
+    val b = new Box(1, 1, 1) // create cube shape at the origin
     val geom = new Geometry("Box", b)  // create cube geometry from the shape
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")  // create a simple material
     mat.setColor("Color", ColorRGBA.Blue)   // set color of material to blue

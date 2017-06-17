@@ -45,10 +45,10 @@ class HelloPhysics extends SimpleApplication {
   val sphere = new Sphere(32, 32, 0.4f, true, false)
   sphere.setTextureMode(TextureMode.Projected)
   /** Initialize the brick geometry */
-  val box = new Box(Vector3f.ZERO, brickLength, brickHeight, brickWidth)
+  val box = new Box(brickLength, brickHeight, brickWidth)
   box.scaleTextureCoordinates(new Vector2f(1f, .5f))
   /** Initialize the floor geometry */
-  val floor = new Box(Vector3f.ZERO, 10f, 0.1f, 5f)
+  val floor = new Box(10f, 0.1f, 5f)
   floor.scaleTextureCoordinates(new Vector2f(3, 6))
 
   override def simpleInitApp: Unit = {

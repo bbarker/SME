@@ -89,7 +89,7 @@ class HelloPicking extends SimpleApplication {
 
   /** A cube object for target practice */
   protected def makeCube(name:String, x:Float, y:Float, z:Float): Geometry =  {
-    val box = new Box(new Vector3f(x, y, z), 1, 1, 1)
+    val box = new Box(1, 1, 1)
     val cube = new Geometry(name, box)
     val mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat1.setColor("Color", ColorRGBA.randomColor())
@@ -99,7 +99,7 @@ class HelloPicking extends SimpleApplication {
  
   /** A floor to show that the "shot" can go through several objects. */
   protected def makeFloor(): Geometry =  {
-    val box = new Box(new Vector3f(0, -4, -5), 15, .2f, 15)
+    val box = new Box(15, .2f, 15)
     val floor = new Geometry("the Floor", box)
     val mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat1.setColor("Color", ColorRGBA.Gray)

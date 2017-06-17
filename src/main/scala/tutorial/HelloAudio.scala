@@ -2,6 +2,7 @@ package fr.hsyl20.sme.tutorial
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.audio.AudioNode;
+import com.jme3.audio.AudioData.DataType;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
@@ -13,15 +14,17 @@ import com.jme3.scene.shape.Box;
 /** Sample 11 - playing 3D audio. */
 class HelloAudio extends SimpleApplication {
 
-  private var audio_gun:AudioNode = null
-  private var audio_nature:AudioNode = null
+  private val audio_gun: AudioNode = 
+    new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer)
+  private val audio_nature:AudioNode = 
+    new AudioNode(assetManager, "Sound/Environment/Nature.ogg", DataType.Stream)
   private var player:Geometry = null
 
   override def simpleInitApp: Unit = {
     flyCam.setMoveSpeed(40)
  
     /** just a blue box floating in space */
-    val box1 = new Box(Vector3f.ZERO, 1, 1, 1)
+    val box1 = new Box(1, 1, 1)
     player = new Geometry("Player", box1)
     val mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat1.setColor("Color", ColorRGBA.Blue)
@@ -36,13 +39,11 @@ class HelloAudio extends SimpleApplication {
   /** We create two audio nodes. */
   private def initAudio():Unit =  {
     /* gun shot sound is to be triggered by a mouse click. */
-    audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false)
     audio_gun.setLooping(false)
     audio_gun.setVolume(2)
     rootNode.attachChild(audio_gun)
  
     /* nature sound - keeps playing in a loop. */
-    audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false)
     audio_nature.setLooping(true)  // activate continuous playing
     audio_nature.setPositional(true)
     audio_nature.setLocalTranslation(Vector3f.ZERO.clone())

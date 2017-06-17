@@ -23,3 +23,8 @@ cross-compilation in sbt, see http://www.scala-sbt.org/0.13/docs/Cross-Build.htm
 
 For more information on the sbt-dotty plugin, see the
 [dotty-example-project](https://github.com/lampepfl/dotty-example-project/blob/master/README.md).
+
+
+## References
+
+* Cloned from [here](https://github.com/bbarker/SME_dotty_update).

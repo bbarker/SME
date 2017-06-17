@@ -11,11 +11,9 @@ import com.jme3.scene.shape.Box
  * In this example, we make the player character rotate. */
 class HelloLoop extends SimpleApplication {
  
-  protected var player:Geometry = null
+  protected val player: Geometry = new Geometry("blue cube", new Box(1, 1, 1))
 
   override def simpleInitApp: Unit = {
-    val b = new Box(Vector3f.ZERO, 1, 1, 1)
-    player = new Geometry("blue cube", b)
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat)
@@ -23,14 +21,14 @@ class HelloLoop extends SimpleApplication {
   }
 
   /* This is the update loop */
-  override def simpleUpdate(tpf:Float): Unit = {
+  override def simpleUpdate(tpf: Float): Unit = {
     // make the player rotate
     player.rotate(0, 2*tpf, 0)
   }
 }
 
 object HelloLoop {
-  def main(args:Array[String]): Unit = {
+  def main(args: Array[String]): Unit = {
 
     import java.util.logging.{Logger,Level}
     Logger.getLogger("").setLevel(Level.WARNING);

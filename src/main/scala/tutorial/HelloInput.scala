@@ -20,7 +20,7 @@ class HelloInput extends SimpleApplication {
   var isRunning: Boolean = true
 
   override def simpleInitApp: Unit = {
-    val b = new Box(Vector3f.ZERO, 1, 1, 1)
+    val b = new Box(1, 1, 1)
     player = new Geometry("Player", b)
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)

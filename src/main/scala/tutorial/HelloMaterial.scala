@@ -20,7 +20,7 @@ class HelloMaterial extends SimpleApplication {
  
   override def simpleInitApp: Unit = {
     /** A simple textured cube -- in good MIP map quality. */
-    val boxshape1 = new Box(new Vector3f(-3f,1.1f,0f), 1f,1f,1f)
+    val boxshape1 = new Box(1f,1f,1f)
     val cube = new Geometry("My Textured Box", boxshape1)
     val mat_stl = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     val tex_ml = assetManager.loadTexture("Interface/Logo/Monkey.jpg")
@@ -29,7 +29,7 @@ class HelloMaterial extends SimpleApplication {
     rootNode.attachChild(cube)
  
     /** A translucent/transparent texture, similar to a window frame. */
-    val boxshape3 = new Box(new Vector3f(0f,0f,0f), 1f,1f,0.01f)
+    val boxshape3 = new Box(1f,1f,0.01f)
     val window_frame = new Geometry("window frame", boxshape3)
     val mat_tt = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat_tt.setTexture("ColorMap", assetManager.loadTexture("Textures/ColoredTex/Monkey.png"))
@@ -41,7 +41,7 @@ class HelloMaterial extends SimpleApplication {
     rootNode.attachChild(window_frame)
  
     /** A cube with base color "leaking" through a partially transparent texture */
-    val boxshape4 = new Box(new Vector3f(3f,-1f,0f), 1f,1f,1f)
+    val boxshape4 = new Box(1f,1f,1f)
     val cube_leak = new Geometry("Leak-through color cube", boxshape4)
     val mat_tl = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat_tl.setTexture("ColorMap", assetManager.loadTexture("Textures/ColoredTex/Monkey.png"))
