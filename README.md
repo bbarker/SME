@@ -1,25 +1,21 @@
-Scala Monkey Engine (wrapper for jMonkeyEngine)
-===============================================
+# Scala Monkey Engine (wrapper for jMonkeyEngine)
 
-1) Installation
+## Installation
 
-Execute install_jME.sh
-
-or
-
-Copy jME's jars into lib/
-Copy jME's town.zip into data/
-
-2) Execution
 
 Start sbt:
+
+```
 $ sbt
+```
 
 Run one example:
-sbt> run-hello-physics
-## sbt project cross-compiled with Dotty and Scala 2
 
-### Usage
+```
+sbt> runHelloPhysics
+```
+
+### Build details
 
 This is a normal sbt project, you can compile code with `sbt compile` and run it
 with `sbt run`, `sbt console` will start a Dotty REPL. For more information on
