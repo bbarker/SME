@@ -16,12 +16,10 @@ import com.jme3.input.controls.MouseButtonTrigger
 /** Sample 5 - how to map keys and mousebuttons to actions */
 class HelloInput extends SimpleApplication {
  
-  protected var player:Geometry = null
+  protected var player: Geometry = new Geometry("Player", new Box(1, 1, 1))
   var isRunning: Boolean = true
 
   override def simpleInitApp: Unit = {
-    val b = new Box(1, 1, 1)
-    player = new Geometry("Player", b)
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat)
@@ -43,7 +41,7 @@ class HelloInput extends SimpleApplication {
   }
 
   private val actionListener = new ActionListener {
-    def onAction(name:String, keyPressed:Boolean, tpf:Float): Unit = {
+    def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
       if (name == "Pause" && !keyPressed) {
         isRunning = !isRunning
       }
@@ -51,7 +49,7 @@ class HelloInput extends SimpleApplication {
   }
  
   private val analogListener = new AnalogListener {
-    def onAnalog(name:String, value:Float, tpf:Float): Unit = {
+    def onAnalog(name: String, value: Float, tpf: Float): Unit = {
       if (isRunning) {
         name match {
           case "Rotate" => player.rotate(0, value*speed, 0)
