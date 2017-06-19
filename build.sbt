@@ -8,7 +8,8 @@ lazy val root = (project in file("."))
   .settings(
     name := "SME",
     version := "0.1",
-    scalaVersion := dottyVersion,
+    //scalaVersion := dottyVersion,
+     scalaVersion := "2.11.11",
     LWJGLPlugin.lwjgl.version := lwjglVersion,
     //wartremoverWarnings ++= Warts.unsafe,
     //wartremoverErrors ++= Seq(Wart.Return),

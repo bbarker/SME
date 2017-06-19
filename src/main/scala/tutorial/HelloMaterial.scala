@@ -78,6 +78,6 @@ object HelloMaterial {
     Logger.getLogger("").setLevel(Level.WARNING);
 
     val app = new HelloMaterial
-    app.start
+    app.start()
   }
 }

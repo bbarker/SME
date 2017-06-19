@@ -58,6 +58,6 @@ object HelloAssets {
     Logger.getLogger("").setLevel(Level.WARNING);
 
     val app = new HelloAssets
-    app.start
+    app.start()
   }
 }
