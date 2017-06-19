@@ -1,6 +1,7 @@
 *.swp
 target/*
-project/target/*
+project/target
+project/project
 lib/
 data
 *.so
