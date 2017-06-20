@@ -11,7 +11,7 @@ import com.jme3.scene.shape.Box
  * In this example, we make the player character rotate. */
 class HelloLoop extends SimpleApplication {
  
-  protected val player: Geometry = new Geometry("blue cube", new Box(1, 1, 1))
+  protected lazy val player: Geometry = new Geometry("blue cube", new Box(1, 1, 1))
 
   override def simpleInitApp: Unit = {
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")

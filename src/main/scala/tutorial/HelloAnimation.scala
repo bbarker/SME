@@ -11,7 +11,7 @@ import com.jme3.input.controls.KeyTrigger
 import com.jme3.light.DirectionalLight
 import com.jme3.math.ColorRGBA
 import com.jme3.math.Vector3f
-import com.jme3.scene.Node
+import com.jme3.scene.{Node, Spatial, SpatialWrap}
 import com.jme3.scene.debug.SkeletonDebugger
 import com.jme3.material.Material
  
@@ -19,29 +19,26 @@ import com.jme3.material.Material
  * using channels, a controller, and an AnimEventListener. */
 class HelloAnimation extends SimpleApplication with AnimEventListener {
 
-  private var channel:AnimChannel = null
-  private var control:AnimControl = null
-  var player:Node = null
- 
+  lazy val player: Node = assetManager.loadModel("Models/Oto/Oto.mesh.xml").toNode
+  private lazy val control: AnimControl = player.getControl(classOf[AnimControl])
+  private lazy val channel: AnimChannel = control.createChannel()
+
   override def simpleInitApp: Unit = {
     viewPort.setBackgroundColor(ColorRGBA.LightGray)
     initKeys()
     val dl = new DirectionalLight()
     dl.setDirection(new Vector3f(-0.1f, -1f, -1).normalizeLocal())
     rootNode.addLight(dl)
-    player = assetManager.loadModel("Models/Oto/Oto.mesh.xml").asInstanceOf[Node]
     player.setLocalScale(0.5f)
     rootNode.attachChild(player)
-    control = player.getControl(classOf[AnimControl])
     control.addListener(this)
-    channel = control.createChannel()
     channel.setAnim("stand")
 
     /* Skeleton debugger */
-    val skeletonDebug = new SkeletonDebugger("skeleton", control.getSkeleton())
+    val skeletonDebug = new SkeletonDebugger("skeleton", control.getSkeleton)
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Green)
-    mat.getAdditionalRenderState().setDepthTest(false)
+    mat.getAdditionalRenderState.setDepthTest(false)
     skeletonDebug.setMaterial(mat)
     player.attachChild(skeletonDebug)
 
@@ -51,7 +48,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     control.getAnimationNames.foreach(println)
   }
 
-  def onAnimCycleDone(control:AnimControl, channel:AnimChannel, animName:String): Unit = {
+  def onAnimCycleDone(control:AnimControl, channel:AnimChannel, animName: String): Unit = {
     if (animName == "Walk") {
       channel.setAnim("stand", 0.50f)
       channel.setLoopMode(LoopMode.DontLoop)
@@ -59,7 +56,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     }
   }
  
-  def onAnimChange(control:AnimControl, channel:AnimChannel, animName:String): Unit = {
+  def onAnimChange(control:AnimControl, channel:AnimChannel, animName: String): Unit = {
     // unused
   }
  
@@ -72,9 +69,9 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
   val actionListener = new ActionListener {
     def onAction(name:String, keyPressed:Boolean, tpf:Float): Unit = {
       if (name == "Walk" && !keyPressed) {
-        if (channel.getAnimationName() != "Walk") {
-          channel.setAnim("Walk", 0.50f);
-          channel.setLoopMode(LoopMode.Loop);
+        if (channel.getAnimationName != "Walk") {
+          channel.setAnim("Walk", 0.50f)
+          channel.setLoopMode(LoopMode.Loop)
         }
       }
     }
@@ -85,9 +82,9 @@ object HelloAnimation {
   def main(args:Array[String]): Unit = {
 
     import java.util.logging.{Logger,Level}
-    Logger.getLogger("").setLevel(Level.WARNING);
+    Logger.getLogger("").setLevel(Level.WARNING)
 
     val app = new HelloAnimation
-    app.start
+    app.start()
   }
 }

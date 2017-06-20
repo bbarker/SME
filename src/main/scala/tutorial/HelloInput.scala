@@ -1,6 +1,7 @@
 package tutorial
+import tutorial.Actions._
 
-import com.jme3.app.SimpleApplication
+import com.jme3.app.{SimpleApplication, SimpleApplicationWrap}
 import com.jme3.material.Material
 import com.jme3.math.Vector3f
 import com.jme3.scene.Geometry
@@ -13,12 +14,10 @@ import com.jme3.input.controls.AnalogListener
 import com.jme3.input.controls.KeyTrigger
 import com.jme3.input.controls.MouseButtonTrigger
 
-import HelloInput.Helpers._
-
 /** Sample 5 - how to map keys and mousebuttons to actions */
 class HelloInput extends SimpleApplication {
  
-  protected var player: Geometry = new Geometry("Player", new Box(1, 1, 1))
+  protected lazy val player: Geometry = new Geometry("Player", new Box(1, 1, 1))
   var isRunning: Boolean = true
 
   override def simpleInitApp: Unit = {
@@ -81,29 +80,6 @@ object HelloInput {
     val app = new HelloInput
     app.start()
   }
-
-  // Normally the following would appear in a package
-  // sharable to most of the application:
-  object Helpers {
-    implicit def actionToString(action: Action): String =
-      action.getClass.getName.stripSuffix("$").replaceAll(".*\\$", "")
-    
-    object Action{
-      def apply(name: String): Action = {
-        Class.forName("tutorial.HelloInput$Helpers$" + name).newInstance()
-          .asInstanceOf[Action]
-      }
-    }
-    sealed abstract class Action {
-      override def toString: String = actionToString(this)
-    }
-    case class Rotate() extends Action
-    case class Right() extends Action
-    case class Left() extends Action
-    case class Pause() extends Action
-  }
-
-
 }
 
 
