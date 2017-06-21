@@ -14,12 +14,21 @@ import com.jme3.math.Vector3f
 import com.jme3.scene.{Node, Spatial, SpatialWrap}
 import com.jme3.scene.debug.SkeletonDebugger
 import com.jme3.material.Material
- 
+
+import scala.collection.JavaConverters._
+import cats._
+import cats.instances.all._
+import cats.syntax.eq._
+
 /** Sample 7 - how to load an OgreXML model and play an animation,
  * using channels, a controller, and an AnimEventListener. */
 class HelloAnimation extends SimpleApplication with AnimEventListener {
 
-  lazy val player: Node = assetManager.loadModel("Models/Oto/Oto.mesh.xml").toNode
+  lazy val player: Node = assetManager.loadModel("Models/Oto/Oto.mesh.xml")
+    .toNode.right.toOption match {
+      case Some(node) => node
+    }
+
   private lazy val control: AnimControl = player.getControl(classOf[AnimControl])
   private lazy val channel: AnimChannel = control.createChannel()
 
@@ -30,7 +39,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     dl.setDirection(new Vector3f(-0.1f, -1f, -1).normalizeLocal())
     rootNode.addLight(dl)
     player.setLocalScale(0.5f)
-    rootNode.attachChild(player)
+    val numRootChildren = rootNode.attachChild(player)
     control.addListener(this)
     channel.setAnim("stand")
 
@@ -40,16 +49,15 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     mat.setColor("Color", ColorRGBA.Green)
     mat.getAdditionalRenderState.setDepthTest(false)
     skeletonDebug.setMaterial(mat)
-    player.attachChild(skeletonDebug)
+    val numPlayerChildren = player.attachChild(skeletonDebug)
 
     /* List of animation names*/
-    import scala.collection.JavaConversions._
     println("Available animations:")
-    control.getAnimationNames.foreach(println)
+    control.getAnimationNames.asScala.foreach(nm => println(nm))
   }
 
   def onAnimCycleDone(control:AnimControl, channel:AnimChannel, animName: String): Unit = {
-    if (animName == "Walk") {
+    if (animName === "Walk") {
       channel.setAnim("stand", 0.50f)
       channel.setLoopMode(LoopMode.DontLoop)
       channel.setSpeed(1f)
@@ -66,10 +74,10 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     inputManager.addListener(actionListener, "Walk")
   }
 
-  val actionListener = new ActionListener {
+  val actionListener: ActionListener = new ActionListener {
     def onAction(name:String, keyPressed:Boolean, tpf:Float): Unit = {
-      if (name == "Walk" && !keyPressed) {
-        if (channel.getAnimationName != "Walk") {
+      if (name === "Walk" && !keyPressed) {
+        if (channel.getAnimationName =!= "Walk") {
           channel.setAnim("Walk", 0.50f)
           channel.setLoopMode(LoopMode.Loop)
         }

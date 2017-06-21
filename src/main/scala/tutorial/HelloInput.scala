@@ -14,6 +14,11 @@ import com.jme3.input.controls.AnalogListener
 import com.jme3.input.controls.KeyTrigger
 import com.jme3.input.controls.MouseButtonTrigger
 
+import cats._
+import cats.instances.all._
+import cats.syntax.eq._
+
+
 /** Sample 5 - how to map keys and mousebuttons to actions */
 class HelloInput extends SimpleApplication {
  
@@ -24,7 +29,7 @@ class HelloInput extends SimpleApplication {
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat)
-    rootNode.attachChild(player)
+    val numRootChildren = rootNode.attachChild(player)
     initKeys() // load my custom keybinding
   }
 
@@ -43,7 +48,7 @@ class HelloInput extends SimpleApplication {
 
   private val actionListener = new ActionListener {
     def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
-      if (name == Pause().toString && !keyPressed) {
+      if (name === Pause().toString && !keyPressed) {
         println("pausing!...")
         isRunning = !isRunning
       }
@@ -54,13 +59,15 @@ class HelloInput extends SimpleApplication {
     def onAnalog(name: String, value: Float, tpf: Float): Unit = {
       if (isRunning) {
         Action(name) match {
-          case Rotate() => player.rotate(0, value*speed, 0)
+          case Rotate() =>
+            val vv = player.rotate(0, value*speed, 0)
+            ()
           case Right() =>
-            val v = player.getLocalTranslation
-            player.setLocalTranslation(v.x + value*speed, v.y, v.z)
+            val vv = player.getLocalTranslation
+            player.setLocalTranslation(vv.x + value*speed, vv.y, vv.z)
           case Left() =>
-            val v = player.getLocalTranslation
-            player.setLocalTranslation(v.x - value*speed, v.y, v.z)
+            val vv = player.getLocalTranslation
+            player.setLocalTranslation(vv.x - value*speed, vv.y, vv.z)
           case _ => ()
         }
       }
