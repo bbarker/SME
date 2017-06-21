@@ -42,8 +42,8 @@ class HelloInput extends SimpleApplication {
   }
 
   private val actionListener = new ActionListener {
-    def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
-      if (name == Pause().toString && !keyPressed) {
+    def onAction(action: AppAction, keyPressed: Boolean, tpf: Float): Unit = {
+      if (action == Pause().toString && !keyPressed) {
         println("pausing!...")
         isRunning = !isRunning
       }
@@ -53,7 +53,7 @@ class HelloInput extends SimpleApplication {
   private val analogListener = new AnalogListener {
     def onAnalog(name: String, value: Float, tpf: Float): Unit = {
       if (isRunning) {
-        Action(name) match {
+        AppAction(name) match {
           case Rotate() => player.rotate(0, value*speed, 0)
           case Right() =>
             val v = player.getLocalTranslation
