@@ -1,19 +1,16 @@
 package tutorial
 import tutorial.Actions._
-
 import com.jme3.app.{SimpleApplication, SimpleApplicationWrap}
 import com.jme3.material.Material
 import com.jme3.math.Vector3f
 import com.jme3.scene.Geometry
 import com.jme3.scene.shape.Box
 import com.jme3.math.ColorRGBA
-import com.jme3.input.KeyInput
-import com.jme3.input.MouseInput
-import com.jme3.input.controls.ActionListener
-import com.jme3.input.controls.AnalogListener
+import com.jme3.input.{Action, InputManagerWrap, KeyInput, MouseInput}
+import com.jme3.input.controls.{ActionListener, ActionListenerWrap}
+import com.jme3.input.controls.{AnalogListener, AnalogListenerWrap}
 import com.jme3.input.controls.KeyTrigger
 import com.jme3.input.controls.MouseButtonTrigger
-
 import cats._
 import cats.instances.all._
 import cats.syntax.eq._
@@ -36,19 +33,21 @@ class HelloInput extends SimpleApplication {
   /** Custom Keybinding: Map named actions to inputs. */
   def initKeys(): Unit = {
     // You can map one or several inputs to one named action
-    inputManager.addMapping(Pause(),  new KeyTrigger(KeyInput.KEY_P))
-    inputManager.addMapping(Left(),   new KeyTrigger(KeyInput.KEY_J))
-    inputManager.addMapping(Right(),  new KeyTrigger(KeyInput.KEY_K))
-    inputManager.addMapping(Rotate(), new KeyTrigger(KeyInput.KEY_SPACE),
+    inputManager.addMapping(Pause,  new KeyTrigger(KeyInput.KEY_P))
+    inputManager.addMapping(Left,   new KeyTrigger(KeyInput.KEY_J))
+    inputManager.addMapping(Right,  new KeyTrigger(KeyInput.KEY_K))
+    inputManager.addMapping(Rotate, new KeyTrigger(KeyInput.KEY_SPACE),
                                       new MouseButtonTrigger(MouseInput.BUTTON_LEFT))
     // Add the names to the action listener.
-    inputManager.addListener(actionListener, Pause())
-    inputManager.addListener(analogListener, Left(), Right(), Rotate())
+    inputManager.addListener(actionListener, Pause)
+    inputManager.addListener(analogListener, Left, Right, Rotate)
   }
 
   private val actionListener = new ActionListener {
+    //TODO: think about if it is possible to generate this signature
+    //TODO: from typed signature using Scala.Meta
     def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
-      if (name === Pause().toString && !keyPressed) {
+      if (name === Pause.name && !keyPressed) {
         println("pausing!...")
         isRunning = !isRunning
       }
@@ -59,13 +58,13 @@ class HelloInput extends SimpleApplication {
     def onAnalog(name: String, value: Float, tpf: Float): Unit = {
       if (isRunning) {
         Action(name) match {
-          case Rotate() =>
+          case Rotate =>
             val vv = player.rotate(0, value*speed, 0)
             ()
-          case Right() =>
+          case Right =>
             val vv = player.getLocalTranslation
             player.setLocalTranslation(vv.x + value*speed, vv.y, vv.z)
-          case Left() =>
+          case Left =>
             val vv = player.getLocalTranslation
             player.setLocalTranslation(vv.x - value*speed, vv.y, vv.z)
           case _ => ()
