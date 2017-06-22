@@ -24,11 +24,11 @@ lazy val root = (project in file("."))
     ,libraryDependencies ++= jmonkeyDeps
     ,libraryDependencies += "org.typelevel" %% "cats" % "0.9.0"
     ,libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
-    ,wartremoverWarnings += Wart.Var
-    ,wartremoverErrors ++= Warts.allBut(
-      Wart.Var, Wart.Nothing, Wart.ImplicitConversion,
-      Wart.ExplicitImplicitTypes // Seems to not work correctly
-    )
+//    ,wartremoverWarnings += Wart.Var
+//    ,wartremoverErrors ++= Warts.allBut(
+//      Wart.Var, Wart.Nothing, Wart.ImplicitConversion,
+//      Wart.ExplicitImplicitTypes // Seems to not work correctly
+//    )
           /* Tasks */
     ,fullRunTask(TaskKey[Unit]("run-hello-simple-application"), Test, "fr.hsyl20.sme.tutorial.HelloSimpleApplication")
     ,fullRunTask(TaskKey[Unit]("run-hello-node"), Test, "fr.hsyl20.sme.tutorial.HelloNode")

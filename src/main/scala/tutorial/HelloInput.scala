@@ -15,6 +15,8 @@ import cats._
 import cats.instances.all._
 import cats.syntax.eq._
 
+import com.jme3.syntax._
+
 
 /** Sample 5 - how to map keys and mousebuttons to actions */
 class HelloInput extends SimpleApplication {
@@ -26,7 +28,7 @@ class HelloInput extends SimpleApplication {
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat)
-    ;{ val _ = rootNode.attachChild(player) }
+    discard{ rootNode.attachChild(player) }
     initKeys() // load my custom keybinding
   }
 
@@ -59,7 +61,7 @@ class HelloInput extends SimpleApplication {
       if (isRunning) {
         Action(name) match {
           case Rotate =>
-            val vv = player.rotate(0, value*speed, 0)
+            discard{ player.rotate(0, value*speed, 0) }
             ()
           case Right =>
             val vv = player.getLocalTranslation

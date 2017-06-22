@@ -6,8 +6,9 @@ import com.jme3.light.DirectionalLight
 import com.jme3.material.Material
 import com.jme3.math.Vector3f
 import com.jme3.scene.Geometry
-import com.jme3.scene.Spatial
 import com.jme3.scene.shape.Box
+
+import com.jme3.syntax._
  
 /** Sample 3 - how to load an OBJ model, and OgreXML model, 
  * a material/texture, or text. */
@@ -17,7 +18,7 @@ class HelloAssets extends SimpleApplication {
     val teapot = assetManager.loadModel("Models/Teapot/Teapot.obj")
     val mat_default = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md")
     teapot.setMaterial(mat_default)
-    ;{ val _ = rootNode.attachChild(teapot) }
+    discard{ rootNode.attachChild(teapot) }
 
     // Create a wall with a simple texture from test_data
     val box = new Box(2.5f,2.5f,1.0f)
@@ -26,7 +27,7 @@ class HelloAssets extends SimpleApplication {
     mat_brick.setTexture("ColorMap", assetManager.loadTexture("Textures/Terrain/BrickWall/BrickWall.jpg"))
     wall.setMaterial(mat_brick)
     wall.setLocalTranslation(2.0f,-2.5f,0.0f)
-    ;{ val _ = rootNode.attachChild(wall) }
+    discard{ rootNode.attachChild(wall) }
 
     // Display a line of text with a default font
     guiNode.detachAllChildren()
@@ -35,7 +36,7 @@ class HelloAssets extends SimpleApplication {
     helloText.setSize(guiFont.getCharSet.getRenderedSize)
     helloText.setText("Hello World")
     helloText.setLocalTranslation(300, helloText.getLineHeight, 0)
-    ;{ val _ = guiNode.attachChild(helloText) }
+    discard{ guiNode.attachChild(helloText) }
 
     // Load a model from test_data (OgreXML + material + texture)
     val ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml")

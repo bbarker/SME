@@ -11,7 +11,7 @@ import com.jme3.input.controls.KeyTrigger
 import com.jme3.light.DirectionalLight
 import com.jme3.math.ColorRGBA
 import com.jme3.math.Vector3f
-import com.jme3.scene.{Node, Spatial, SpatialWrap}
+import com.jme3.scene.{Node, SpatialWrap}
 import com.jme3.scene.debug.SkeletonDebugger
 import com.jme3.material.Material
 
@@ -19,6 +19,8 @@ import scala.collection.JavaConverters._
 import cats._
 import cats.instances.all._
 import cats.syntax.eq._
+
+import com.jme3.syntax._
 
 /** Sample 7 - how to load an OgreXML model and play an animation,
  * using channels, a controller, and an AnimEventListener. */
@@ -39,7 +41,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     dl.setDirection(new Vector3f(-0.1f, -1f, -1).normalizeLocal())
     rootNode.addLight(dl)
     player.setLocalScale(0.5f)
-    ;{val _ = rootNode.attachChild(player)}
+    discard{ rootNode.attachChild(player) }
     control.addListener(this)
     channel.setAnim("stand")
 
@@ -49,7 +51,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     mat.setColor("Color", ColorRGBA.Green)
     mat.getAdditionalRenderState.setDepthTest(false)
     skeletonDebug.setMaterial(mat)
-    val numPlayerChildren = player.attachChild(skeletonDebug)
+    discard{ player.attachChild(skeletonDebug) }
 
     /* List of animation names*/
     println("Available animations:")

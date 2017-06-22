@@ -3,7 +3,7 @@ package com.jme3
 import com.jme3.input.controls.{InputListener, Trigger}
 
 /**
-  * Created by brandon on 6/21/17.
+  * Created by Brandon Barker on 6/21/17.
   */
 package object input {
 
