@@ -17,13 +17,13 @@ class HelloLoop extends SimpleApplication {
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat)
-    rootNode.attachChild(player)
+    ;{ val _ = rootNode.attachChild(player)}
   }
 
   /* This is the update loop */
   override def simpleUpdate(tpf: Float): Unit = {
     // make the player rotate
-    player.rotate(0, 2*tpf, 0)
+    {val _ = player.rotate(0, 2*tpf, 0)}
   }
 }
 
@@ -31,9 +31,9 @@ object HelloLoop {
   def main(args: Array[String]): Unit = {
 
     import java.util.logging.{Logger,Level}
-    Logger.getLogger("").setLevel(Level.WARNING);
+    Logger.getLogger("").setLevel(Level.WARNING)
 
     val app = new HelloLoop
-    app.start
+    app.start()
   }
 }

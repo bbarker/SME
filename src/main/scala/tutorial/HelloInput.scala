@@ -26,7 +26,7 @@ class HelloInput extends SimpleApplication {
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat)
-    val numRootChildren = rootNode.attachChild(player)
+    ;{ val _ = rootNode.attachChild(player) }
     initKeys() // load my custom keybinding
   }
 

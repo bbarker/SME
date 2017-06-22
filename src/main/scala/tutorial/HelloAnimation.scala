@@ -39,7 +39,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
     dl.setDirection(new Vector3f(-0.1f, -1f, -1).normalizeLocal())
     rootNode.addLight(dl)
     player.setLocalScale(0.5f)
-    val numRootChildren = rootNode.attachChild(player)
+    ;{val _ = rootNode.attachChild(player)}
     control.addListener(this)
     channel.setAnim("stand")
 

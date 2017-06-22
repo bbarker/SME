@@ -28,13 +28,13 @@ class HelloNode extends SimpleApplication {
 
     /** Create a pivot node at (0,0,0) and attach it to the root node */
     val pivot = new Node("pivot")
-    rootNode.attachChild(pivot) // put this node in the scene
+    ;{val _ = rootNode.attachChild(pivot)} // put this node in the scene
 
     /** Attach the two boxes to the *pivot* node. */
-    pivot.attachChild(blue)
-    pivot.attachChild(red)
+    ;{val _ = pivot.attachChild(blue)}
+    ;{val _ = pivot.attachChild(red)}
     /** Rotate the pivot node: Note that both boxes have rotated! */
-    pivot.rotate(.4f,.4f,0f)
+    ;{val (_) = pivot.rotate(.4f,.4f,0f)}
   }
 
 }
@@ -43,9 +43,9 @@ object HelloNode {
   def main(args:Array[String]): Unit = {
 
     import java.util.logging.{Logger,Level}
-    Logger.getLogger("").setLevel(Level.WARNING);
+    Logger.getLogger("").setLevel(Level.WARNING)
 
     val app = new HelloNode
-    app.start
+    app.start()
   }
 }

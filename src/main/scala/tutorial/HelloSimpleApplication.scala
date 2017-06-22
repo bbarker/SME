@@ -17,7 +17,7 @@ class HelloSimpleApplication extends SimpleApplication {
     val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")  // create a simple material
     mat.setColor("Color", ColorRGBA.Blue)   // set color of material to blue
     geom.setMaterial(mat)                   // set the cube's material
-    rootNode.attachChild(geom)              // make the cube appear in the scene
+    val _ = rootNode.attachChild(geom)      // make the cube appear in the scene
   }
 
 }

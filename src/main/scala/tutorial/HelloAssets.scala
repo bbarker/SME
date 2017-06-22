@@ -17,7 +17,7 @@ class HelloAssets extends SimpleApplication {
     val teapot = assetManager.loadModel("Models/Teapot/Teapot.obj")
     val mat_default = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md")
     teapot.setMaterial(mat_default)
-    rootNode.attachChild(teapot)
+    ;{ val _ = rootNode.attachChild(teapot) }
 
     // Create a wall with a simple texture from test_data
     val box = new Box(2.5f,2.5f,1.0f)
@@ -26,16 +26,16 @@ class HelloAssets extends SimpleApplication {
     mat_brick.setTexture("ColorMap", assetManager.loadTexture("Textures/Terrain/BrickWall/BrickWall.jpg"))
     wall.setMaterial(mat_brick)
     wall.setLocalTranslation(2.0f,-2.5f,0.0f)
-    rootNode.attachChild(wall)
+    ;{ val _ = rootNode.attachChild(wall) }
 
     // Display a line of text with a default font
     guiNode.detachAllChildren()
     guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt")
     val helloText = new BitmapText(guiFont, false)
-    helloText.setSize(guiFont.getCharSet().getRenderedSize())
+    helloText.setSize(guiFont.getCharSet.getRenderedSize)
     helloText.setText("Hello World")
-    helloText.setLocalTranslation(300, helloText.getLineHeight(), 0)
-    guiNode.attachChild(helloText)
+    helloText.setLocalTranslation(300, helloText.getLineHeight, 0)
+    ;{ val _ = guiNode.attachChild(helloText) }
 
     // Load a model from test_data (OgreXML + material + texture)
     val ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml")
