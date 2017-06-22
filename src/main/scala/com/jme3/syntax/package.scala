@@ -6,7 +6,7 @@ package com.jme3
 package object syntax {
 
   def discard(evaluateForSideEffectOnly: => Any): Unit = {
-    evaluateForSideEffectOnly
+    val _: Any = evaluateForSideEffectOnly
     () //Return unit to prevent warning due to discarding value
   }
 
