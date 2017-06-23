@@ -16,7 +16,8 @@ import com.jme3.light.DirectionalLight
 import com.jme3.math.ColorRGBA
 import com.jme3.math.Vector3f
 import com.jme3.scene.Node
-import com.jme3.scene.Spatial
+import com.jme3.scene.{Spatial, SpatialWrap}
+import com.jme3.syntax._
  
 /**
  * Example 9 - How to make walls and floors solid.
@@ -24,20 +25,35 @@ import com.jme3.scene.Spatial
  */
 class HelloCollision extends SimpleApplication with ActionListener {
 
-  private var sceneModel:Spatial = null
-  private var bulletAppState:BulletAppState = null
-  private var landscape:RigidBodyControl = null
-  private var player:CharacterControl = null
+  private lazy val sceneModel: Spatial = assetManager.loadModel("main.scene")
+  private lazy val bulletAppState: BulletAppState = new BulletAppState()
+
+  // We set up collision detection for the scene by creating a
+  // compound collision shape and a static RigidBodyControl with mass zero.
+  private lazy val sceneShape = CollisionShapeFactory.createMeshShape(
+    sceneModel.toNode.right.toOption  match {
+      case Some(node) => node
+    }
+  )
+  private lazy val landscape: RigidBodyControl = new RigidBodyControl(sceneShape, 0)
+
+  // We set up collision detection for the player by creating
+  // a capsule collision shape and a CharacterControl.
+  // The CharacterControl offers extra settings for
+  // size, stepheight, jumping, falling, and gravity.
+  // We also put the player in its starting position.
+  protected lazy val capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1)
+
+  private lazy val  player: CharacterControl = new CharacterControl(capsuleShape, 0.05f)
   private var walkDirection = new Vector3f
-  private var left:Boolean = false
-  private var right:Boolean = false
-  private var up:Boolean = false
-  private var down:Boolean = false
+  private var left: Boolean = false
+  private var right: Boolean = false
+  private var up: Boolean = false
+  private var down: Boolean = false
 
   override def simpleInitApp: Unit = {
     /** Set up Physics */
-    bulletAppState = new BulletAppState()
-    stateManager.attach(bulletAppState)
+    discard{ stateManager.attach(bulletAppState) }
     //bulletAppState.getPhysicsSpace().enableDebug(assetManager)
  
     // We re-use the flyby camera for rotation, while positioning is handled by physics
@@ -48,22 +64,10 @@ class HelloCollision extends SimpleApplication with ActionListener {
  
     // We load the scene from the zip file and adjust its size.
     assetManager.registerLocator("data/town.zip", classOf[ZipLocator])
-    sceneModel = assetManager.loadModel("main.scene")
     sceneModel.setLocalScale(2f)
- 
-    // We set up collision detection for the scene by creating a
-    // compound collision shape and a static RigidBodyControl with mass zero.
-    val sceneShape = CollisionShapeFactory.createMeshShape(sceneModel.asInstanceOf[Node])
-    landscape = new RigidBodyControl(sceneShape, 0)
+
     sceneModel.addControl(landscape)
- 
-    // We set up collision detection for the player by creating
-    // a capsule collision shape and a CharacterControl.
-    // The CharacterControl offers extra settings for
-    // size, stepheight, jumping, falling, and gravity.
-    // We also put the player in its starting position.
-    val capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1)
-    player = new CharacterControl(capsuleShape, 0.05f)
+
     player.setJumpSpeed(20)
     player.setFallSpeed(30)
     player.setGravity(30)
@@ -71,9 +75,9 @@ class HelloCollision extends SimpleApplication with ActionListener {
  
     // We attach the scene and the player to the rootNode and the physics space,
     // to make them appear in the game world.
-    rootNode.attachChild(sceneModel)
-    bulletAppState.getPhysicsSpace().add(landscape)
-    bulletAppState.getPhysicsSpace().add(player)
+    discard{ rootNode.attachChild(sceneModel) }
+    bulletAppState.getPhysicsSpace.add(landscape)
+    bulletAppState.getPhysicsSpace.add(player)
   }
   
   private def setUpLight(): Unit = {
@@ -123,11 +127,11 @@ class HelloCollision extends SimpleApplication with ActionListener {
   override def simpleUpdate(tpf:Float): Unit =  {
     val camDir = cam.getDirection().clone().multLocal(0.6f)
     val camLeft = cam.getLeft().clone().multLocal(0.4f)
-    walkDirection.set(0, 0, 0)
-    if (left)  { walkDirection.addLocal(camLeft) }
-    if (right) { walkDirection.addLocal(camLeft.negate()) }
-    if (up)    { walkDirection.addLocal(camDir) }
-    if (down)  { walkDirection.addLocal(camDir.negate()) }
+    discard{ walkDirection.set(0, 0, 0) }
+    if (left)  { discard{ walkDirection.addLocal(camLeft) } }
+    if (right) { discard{ walkDirection.addLocal(camLeft.negate()) } }
+    if (up)    { discard{ walkDirection.addLocal(camDir) } }
+    if (down)  { discard{ walkDirection.addLocal(camDir.negate()) } }
     player.setWalkDirection(walkDirection)
     cam.setLocation(player.getPhysicsLocation())
   }
@@ -138,9 +142,9 @@ object HelloCollision {
   def main(args:Array[String]): Unit = {
 
     import java.util.logging.{Logger,Level}
-    Logger.getLogger("").setLevel(Level.WARNING);
+    Logger.getLogger("").setLevel(Level.WARNING)
 
     val app = new HelloCollision
-    app.start
+    app.start()
   }
 }

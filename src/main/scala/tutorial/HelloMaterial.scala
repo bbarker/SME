@@ -12,6 +12,7 @@ import com.jme3.scene.shape.Sphere
 import com.jme3.texture.Texture
 import com.jme3.util.TangentBinormalGenerator
 import com.jme3.renderer.queue.RenderQueue.Bucket
+import com.jme3.syntax._
  
 /** Sample 6 - how to give an object's surface a material and texture.
  * How to make objects transparent, or let colors "leak" through partially
@@ -26,7 +27,7 @@ class HelloMaterial extends SimpleApplication {
     val tex_ml = assetManager.loadTexture("Interface/Logo/Monkey.jpg")
     mat_stl.setTexture("ColorMap", tex_ml)
     cube.setMaterial(mat_stl)
-    rootNode.attachChild(cube)
+    discard{ rootNode.attachChild(cube) }
  
     /** A translucent/transparent texture, similar to a window frame. */
     val boxshape3 = new Box(1f,1f,0.01f)
@@ -38,7 +39,7 @@ class HelloMaterial extends SimpleApplication {
  
     /** Objects with transparency need to be in the render bucket for transparent objects: */
     window_frame.setQueueBucket(Bucket.Transparent)
-    rootNode.attachChild(window_frame)
+    discard{ rootNode.attachChild(window_frame) }
  
     /** A cube with base color "leaking" through a partially transparent texture */
     val boxshape4 = new Box(1f,1f,1f)
@@ -47,7 +48,7 @@ class HelloMaterial extends SimpleApplication {
     mat_tl.setTexture("ColorMap", assetManager.loadTexture("Textures/ColoredTex/Monkey.png"))
     mat_tl.setColor("Color", new ColorRGBA(1f,0f,1f, 1f)) // purple
     cube_leak.setMaterial(mat_tl)
-    rootNode.attachChild(cube_leak)
+    discard{ rootNode.attachChild(cube_leak) }
  
     /** A bumpy rock with a shiny light effect */
     val rock = new Sphere(32,32, 2f)
@@ -60,8 +61,8 @@ class HelloMaterial extends SimpleApplication {
     mat_lit.setFloat("Shininess", 5f) // [1,128]
     shiny_rock.setMaterial(mat_lit)
     shiny_rock.setLocalTranslation(0,2,-2) // Move it a bit
-    shiny_rock.rotate(1.6f, 0, 0)          // Rotate it a bit
-    rootNode.attachChild(shiny_rock)
+    discard{ shiny_rock.rotate(1.6f, 0, 0) }          // Rotate it a bit
+    discard{ rootNode.attachChild(shiny_rock) }
  
     /** Must add a light to make the lit object visible! */
     val sun = new DirectionalLight()

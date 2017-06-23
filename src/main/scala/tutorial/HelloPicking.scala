@@ -19,15 +19,20 @@ import com.jme3.scene.Node
 import com.jme3.scene.Spatial
 import com.jme3.scene.shape.Box
 import com.jme3.scene.shape.Sphere
+import com.jme3.syntax._
 
-import scala.collection.JavaConversions._
+import cats._
+import cats.instances.all._
+import cats.syntax.eq._
+
+import scala.collection.JavaConverters._
  
 /** Sample 8 - how to let the user pick (select) objects in the scene 
  * using the mouse or key presses. Can be used for shooting, opening doors, etc. */
 class HelloPicking extends SimpleApplication {
 
-  var shootables:Node = null
-  var mark:Geometry = null
+  protected lazy val shootables: Node = new Node("Shootables")
+  protected lazy val mark: Geometry = new Geometry("BOOM!", new Sphere(30, 30, 0.2f))
 
   override def simpleInitApp: Unit = {
     initCrossHairs() // a "+" in the middle of the screen to help aiming
@@ -35,14 +40,13 @@ class HelloPicking extends SimpleApplication {
     initMark()       // a red sphere to mark the hit
  
     /** create four colored boxes and a floor to shoot at: */
-    shootables = new Node("Shootables")
-    rootNode.attachChild(shootables)
-    shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f))
-    shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f))
-    shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f))
-    shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f))
-    shootables.attachChild(makeFloor())
-    shootables.attachChild(makeCharacter())
+    discard{ rootNode.attachChild(shootables) }
+    discard{ shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f)) }
+    discard{ shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f)) }
+    discard{ shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f)) }
+    discard{ shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f)) }
+    discard{ shootables.attachChild(makeFloor()) }
+    discard{ shootables.attachChild(makeCharacter()) }
   }
 
   /** Declaring the "Shoot" action and mapping to its triggers. */
@@ -53,35 +57,36 @@ class HelloPicking extends SimpleApplication {
     inputManager.addListener(actionListener, "Shoot")
   }
 
-  val actionListener = new ActionListener {
-    def onAction(name:String, keyPressed:Boolean, tpf:Float): Unit = {
-      if (name == "Shoot" && !keyPressed) {
+  protected val actionListener = new ActionListener {
+    def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
+      if (name === "Shoot" && !keyPressed) {
         // 1. Reset results list.
         val results = new CollisionResults()
         // 2. Aim the ray from cam loc to cam direction.
-        val ray = new Ray(cam.getLocation(), cam.getDirection())
+        val ray = new Ray(cam.getLocation, cam.getDirection())
         // 3. Collect intersections between Ray and Shootables in results list.
-        shootables.collideWith(ray, results)
+        discard{ shootables.collideWith(ray, results) }
         // 4. Print the results
-        println("----- Collisions? " + results.size() + "-----")
-        results.zipWithIndex.foreach { case (r,i) =>
+        println("----- Collisions? " + results.size().toString + "-----")
+        results.asScala.zipWithIndex.foreach { case (rr, ii) =>
           // For each hit, we know distance, impact point, name of geometry.
-          val dist = r.getDistance()
-          val pt = r.getContactPoint()
-          val hit = r.getGeometry().getName()
-          println("* Collision #" + i)
-          println("  You shot " + hit + " at " + pt + ", " + dist + " wu away.")
+          val dist = rr.getDistance
+          val pt = rr.getContactPoint
+          val hit = rr.getGeometry.getName
+          println("* Collision #" + ii.toString)
+          println(s"  You shot $hit at $pt, $dist wu away.")
         }
         // 5. Use the results (we mark the hit object)
         if (results.size() > 0) {
           // The closest collision point is what was truly hit:
-          val closest = results.getClosestCollision()
+          val closest = results.getClosestCollision
           // Let's interact - we mark the hit with a red dot.
-          mark.setLocalTranslation(closest.getContactPoint())
-          rootNode.attachChild(mark)
-        } else {
+          mark.setLocalTranslation(closest.getContactPoint)
+          discard{ rootNode.attachChild(mark) }
+        }
+        else {
           // No hits? Then remove the red mark.
-          rootNode.detachChild(mark)
+          discard{ rootNode.detachChild(mark) }
         }
       }
     }
@@ -109,8 +114,6 @@ class HelloPicking extends SimpleApplication {
  
   /** A red ball that marks the last spot that was "hit" by the "shot". */
   protected def initMark(): Unit = {
-    val sphere = new Sphere(30, 30, 0.2f)
-    mark = new Geometry("BOOM!", sphere)
     val mark_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mark_mat.setColor("Color", ColorRGBA.Red)
     mark.setMaterial(mark_mat)
@@ -118,21 +121,22 @@ class HelloPicking extends SimpleApplication {
  
   /** A centred plus sign to help the player aim. */
   protected def initCrossHairs(): Unit = {
-    guiNode.detachAllChildren();
-    guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
-    val ch = new BitmapText(guiFont, false);
-    ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
+    guiNode.detachAllChildren()
+    guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt")
+    val ch = new BitmapText(guiFont, false)
+    ch.setSize(guiFont.getCharSet.getRenderedSize * 2)
     ch.setText("+"); // crosshairs
     ch.setLocalTranslation( // center
-      settings.getWidth() / 2 - guiFont.getCharSet().getRenderedSize() / 3 * 2,
-      settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
-    guiNode.attachChild(ch);
+      settings.getWidth / 2 - guiFont.getCharSet.getRenderedSize / 3 * 2,
+      settings.getHeight / 2 + ch.getLineHeight / 2, 0
+    )
+    discard{ guiNode.attachChild(ch) }
   }
  
   protected def makeCharacter(): Spatial =  {
     // load a character from jme3test-test-data
     val golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml")
-    golem.scale(0.5f)
+    discard{ golem.scale(0.5f) }
     golem.setLocalTranslation(-1.0f, -1.5f, -0.6f)
  
     // We must add a light to make the model visible

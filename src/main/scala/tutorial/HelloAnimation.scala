@@ -14,13 +14,13 @@ import com.jme3.math.Vector3f
 import com.jme3.scene.{Node, SpatialWrap}
 import com.jme3.scene.debug.SkeletonDebugger
 import com.jme3.material.Material
+import com.jme3.syntax._
 
 import scala.collection.JavaConverters._
+
 import cats._
 import cats.instances.all._
 import cats.syntax.eq._
-
-import com.jme3.syntax._
 
 /** Sample 7 - how to load an OgreXML model and play an animation,
  * using channels, a controller, and an AnimEventListener. */

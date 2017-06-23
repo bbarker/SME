@@ -11,11 +11,11 @@ import com.jme3.input.controls.{ActionListener, ActionListenerWrap}
 import com.jme3.input.controls.{AnalogListener, AnalogListenerWrap}
 import com.jme3.input.controls.KeyTrigger
 import com.jme3.input.controls.MouseButtonTrigger
+import com.jme3.syntax._
+
 import cats._
 import cats.instances.all._
 import cats.syntax.eq._
-
-import com.jme3.syntax._
 
 
 /** Sample 5 - how to map keys and mousebuttons to actions */

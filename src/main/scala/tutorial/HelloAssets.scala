@@ -40,10 +40,10 @@ class HelloAssets extends SimpleApplication {
 
     // Load a model from test_data (OgreXML + material + texture)
     val ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml")
-    ninja.scale(0.05f, 0.05f, 0.05f)
-    ninja.rotate(0.0f, -3.0f, 0.0f)
+    discard{ ninja.scale(0.05f, 0.05f, 0.05f) }
+    discard{ ninja.rotate(0.0f, -3.0f, 0.0f) }
     ninja.setLocalTranslation(0.0f, -5.0f, -2.0f)
-    rootNode.attachChild(ninja)
+    discard{ rootNode.attachChild(ninja) }
     // You must add a light to make the model visible
     val sun = new DirectionalLight
     sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f))
