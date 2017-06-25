@@ -1,4 +1,4 @@
-package fr.hsyl20.sme.tutorial
+package tutorial
 
 import com.jme3.app.SimpleApplication
 import com.jme3.collision.CollisionResult

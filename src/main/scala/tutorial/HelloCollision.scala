@@ -1,4 +1,4 @@
-package fr.hsyl20.sme.tutorial
+package tutorial
 
 import com.jme3.app.SimpleApplication
 import com.jme3.asset.plugins.ZipLocator
@@ -33,6 +33,7 @@ class HelloCollision extends SimpleApplication with ActionListener {
   private lazy val sceneShape = CollisionShapeFactory.createMeshShape(
     sceneModel.toNode.right.toOption  match {
       case Some(node) => node
+      case None => throw new NotImplementedError("No fallback sceneshape")
     }
   )
   private lazy val landscape: RigidBodyControl = new RigidBodyControl(sceneShape, 0)

@@ -1,4 +1,4 @@
-package fr.hsyl20.sme.tutorial
+package tutorial
 
 import com.jme3.animation.AnimChannel
 import com.jme3.animation.AnimControl
@@ -29,6 +29,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
   lazy val player: Node = assetManager.loadModel("Models/Oto/Oto.mesh.xml")
     .toNode.right.toOption match {
       case Some(node) => node
+      case None => throw new NotImplementedError("No fallback player model")
     }
 
   private lazy val control: AnimControl = player.getControl(classOf[AnimControl])
