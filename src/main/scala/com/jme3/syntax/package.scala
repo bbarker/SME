@@ -5,7 +5,7 @@ package com.jme3
   */
 package object syntax {
 
-  def discard[A](evaluateForSideEffectOnly: A): Unit = {
+  @specialized def discard[A](evaluateForSideEffectOnly: A): Unit = {
     val _: A = evaluateForSideEffectOnly
     () //Return unit to prevent warning due to discarding value
   }
