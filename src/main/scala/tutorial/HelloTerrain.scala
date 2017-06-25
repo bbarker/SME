@@ -13,9 +13,9 @@ import com.jme3.texture.Texture.WrapMode
 import jme3tools.converters.ImageToAwt
 import com.jme3.syntax._
 
-import cats._
-import cats.instances.all._
-import cats.syntax.eq._
+//import cats._
+//import cats.instances.all._
+//import cats.syntax.eq._
 
 import scala.collection.JavaConverters._
 

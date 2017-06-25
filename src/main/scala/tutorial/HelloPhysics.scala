@@ -19,9 +19,9 @@ import com.jme3.texture.Texture
 import com.jme3.texture.Texture.WrapMode
 import com.jme3.syntax._
 
-import cats._
-import cats.instances.all._
-import cats.syntax.eq._
+//import cats._
+//import cats.instances.all._
+//import cats.syntax.eq._
 
 /**
  * Example 12 - how to give objects physical properties so they bounce and fall.
@@ -78,7 +78,7 @@ class HelloPhysics extends SimpleApplication {
   */
   protected val actionListener = new ActionListener {
     def onAction(name: String, keyPressed:Boolean, tpf:Float):Unit = {
-      if (name === "shoot" && !keyPressed) {
+      if (name == "shoot" && !keyPressed) {
         makeCannonBall()
       }
     }

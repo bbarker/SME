@@ -18,9 +18,9 @@ import com.jme3.syntax._
 
 import scala.collection.JavaConverters._
 
-import cats._
-import cats.instances.all._
-import cats.syntax.eq._
+//import cats._
+//import cats.instances.all._
+//import cats.syntax.eq._
 
 /** Sample 7 - how to load an OgreXML model and play an animation,
  * using channels, a controller, and an AnimEventListener. */
@@ -59,7 +59,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
   }
 
   def onAnimCycleDone(control:AnimControl, channel:AnimChannel, animName: String): Unit = {
-    if (animName === "Walk") {
+    if (animName == "Walk") {
       channel.setAnim("stand", 0.50f)
       channel.setLoopMode(LoopMode.DontLoop)
       channel.setSpeed(1f)
@@ -78,8 +78,8 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
 
   val actionListener: ActionListener = new ActionListener {
     def onAction(name:String, keyPressed:Boolean, tpf:Float): Unit = {
-      if (name === "Walk" && !keyPressed) {
-        if (channel.getAnimationName =!= "Walk") {
+      if (name == "Walk" && !keyPressed) {
+        if (channel.getAnimationName  !=  "Walk") {
           channel.setAnim("Walk", 0.50f)
           channel.setLoopMode(LoopMode.Loop)
         }

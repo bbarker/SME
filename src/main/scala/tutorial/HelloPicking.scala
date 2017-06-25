@@ -21,9 +21,9 @@ import com.jme3.scene.shape.Box
 import com.jme3.scene.shape.Sphere
 import com.jme3.syntax._
 
-import cats._
-import cats.instances.all._
-import cats.syntax.eq._
+//import cats._
+//import cats.instances.all._
+//import cats.syntax.eq._
 
 import scala.collection.JavaConverters._
  
@@ -59,7 +59,7 @@ class HelloPicking extends SimpleApplication {
 
   protected val actionListener = new ActionListener {
     def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
-      if (name === "Shoot" && !keyPressed) {
+      if (name == "Shoot" && !keyPressed) {
         // 1. Reset results list.
         val results = new CollisionResults()
         // 2. Aim the ray from cam loc to cam direction.

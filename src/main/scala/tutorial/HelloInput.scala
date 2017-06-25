@@ -1,4 +1,5 @@
 package tutorial
+
 import tutorial.Actions._
 import com.jme3.app.{SimpleApplication, SimpleApplicationWrap}
 import com.jme3.material.Material
@@ -13,9 +14,9 @@ import com.jme3.input.controls.KeyTrigger
 import com.jme3.input.controls.MouseButtonTrigger
 import com.jme3.syntax._
 
-import cats._
-import cats.instances.all._
-import cats.syntax.eq._
+//import cats._
+//import cats.instances.all._
+//import cats.syntax.eq._
 
 
 /** Sample 5 - how to map keys and mousebuttons to actions */
@@ -49,7 +50,7 @@ class HelloInput extends SimpleApplication {
     //TODO: think about if it is possible to generate this signature
     //TODO: from typed signature using Scala.Meta
     def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
-      if (name === Pause.name && !keyPressed) {
+      if (name == Pause.name && !keyPressed) {
         println("pausing!...")
         isRunning = !isRunning
       }

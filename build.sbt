@@ -1,6 +1,7 @@
 import LWJGLPlugin._
 
-val dottyVersion = "0.1.2-RC1"
+val scalacMajor  = "2.11"
+val dottyVersion = "0.2.0-bin-20170620-1d05796-NIGHTLY"
 val lwjglVersion = "2.9.3"
 
 lazy val root = (project in file("."))
@@ -8,8 +9,8 @@ lazy val root = (project in file("."))
   .settings(
     name := "SME",
     version := "0.1",
-    //scalaVersion := dottyVersion,
-     scalaVersion := "2.11.11",
+    scalaVersion := dottyVersion,
+    // scalaVersion := "2.11.11",
     LWJGLPlugin.lwjgl.version := lwjglVersion,
     //wartremoverWarnings ++= Warts.unsafe,
     //wartremoverErrors ++= Seq(Wart.Return),
@@ -22,28 +23,31 @@ lazy val root = (project in file("."))
       "Bintray" at "http://dl.bintray.com/jmonkeyengine/org.jmonkeyengine"
     )
     ,libraryDependencies ++= jmonkeyDeps
-    ,libraryDependencies += "org.typelevel" %% "cats" % "0.9.0"
+    ,libraryDependencies += ("org.typelevel" %% "cats" % "0.9.0").withDottyCompat()
     ,libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
-    ,wartremoverWarnings += Wart.Var
-    ,wartremoverErrors ++= Warts.allBut(
-      Wart.Var, Wart.Nothing, Wart.ImplicitConversion,
-      Wart.ExplicitImplicitTypes // Seems to not work correctly
-    )
+    // ,wartremoverWarnings += Wart.Var
+    // ,wartremoverErrors ++= Warts.allBut(
+    //   Wart.Var, Wart.Nothing, Wart.ImplicitConversion,
+    //   Wart.ExplicitImplicitTypes // Seems to not work correctly
+    // )
           /* Tasks */
-    ,fullRunTask(TaskKey[Unit]("run-hello-simple-application"), Test, "fr.hsyl20.sme.tutorial.HelloSimpleApplication")
-    ,fullRunTask(TaskKey[Unit]("run-hello-node"), Test, "fr.hsyl20.sme.tutorial.HelloNode")
-    ,fullRunTask(TaskKey[Unit]("run-hello-assets"), Test, "fr.hsyl20.sme.tutorial.HelloAssets")
-    ,fullRunTask(TaskKey[Unit]("run-hello-loop"), Test, "fr.hsyl20.sme.tutorial.HelloLoop")
-    ,fullRunTask(TaskKey[Unit]("run-hello-input"), Test, "fr.hsyl20.sme.tutorial.HelloInput")
-    ,fullRunTask(TaskKey[Unit]("run-hello-material"), Test, "fr.hsyl20.sme.tutorial.HelloMaterial")
-    ,fullRunTask(TaskKey[Unit]("run-hello-animation"), Test, "fr.hsyl20.sme.tutorial.HelloAnimation")
-    ,fullRunTask(TaskKey[Unit]("run-hello-picking"), Test, "fr.hsyl20.sme.tutorial.HelloPicking")
-    ,fullRunTask(TaskKey[Unit]("run-hello-collision"), Test, "fr.hsyl20.sme.tutorial.HelloCollision")
-    ,fullRunTask(TaskKey[Unit]("run-hello-terrain"), Test, "fr.hsyl20.sme.tutorial.HelloTerrain")
-    ,fullRunTask(TaskKey[Unit]("run-hello-audio"), Test, "fr.hsyl20.sme.tutorial.HelloAudio")
-    ,fullRunTask(TaskKey[Unit]("run-hello-effects"), Test, "fr.hsyl20.sme.tutorial.HelloEffects")
-    ,fullRunTask(TaskKey[Unit]("run-hello-physics"), Test, "fr.hsyl20.sme.tutorial.HelloPhysics")
-  ).enablePlugins(LWJGLPlugin)
+    ,fullRunTask(TaskKey[Unit]("run-hello-simple-application"), Test, "tutorial.HelloSimpleApplication")
+    ,fullRunTask(TaskKey[Unit]("run-hello-node"), Test, "tutorial.HelloNode")
+    ,fullRunTask(TaskKey[Unit]("run-hello-assets"), Test, "tutorial.HelloAssets")
+    ,fullRunTask(TaskKey[Unit]("run-hello-loop"), Test, "tutorial.HelloLoop")
+    ,fullRunTask(TaskKey[Unit]("run-hello-input"), Test, "tutorial.HelloInput")
+    ,fullRunTask(TaskKey[Unit]("run-hello-material"), Test, "tutorial.HelloMaterial")
+    ,fullRunTask(TaskKey[Unit]("run-hello-animation"), Test, "tutorial.HelloAnimation")
+    ,fullRunTask(TaskKey[Unit]("run-hello-picking"), Test, "tutorial.HelloPicking")
+    ,fullRunTask(TaskKey[Unit]("run-hello-collision"), Test, "tutorial.HelloCollision")
+    ,fullRunTask(TaskKey[Unit]("run-hello-terrain"), Test, "tutorial.HelloTerrain")
+    ,fullRunTask(TaskKey[Unit]("run-hello-audio"), Test, "tutorial.HelloAudio")
+    ,fullRunTask(TaskKey[Unit]("run-hello-effects"), Test, "tutorial.HelloEffects")
+    ,fullRunTask(TaskKey[Unit]("run-hello-physics"), Test, "tutorial.HelloPhysics")
+
+  )
+  .enablePlugins(LWJGLPlugin)
+
 
 lazy val jmonkeyDeps = Seq(
       "org.jmonkeyengine" % "jme3-core" % "3.1.0-stable" exclude("org.jmonkeyengine", "jme3-testdata")
@@ -55,6 +59,3 @@ lazy val jmonkeyDeps = Seq(
       ,"org.lwjgl.lwjgl" % "lwjgl_util" % "2.9.3"
 //    ,"org.specs2" %% "specs2-core" % "3.8.9" % "it,test"
 )
-
-
-
