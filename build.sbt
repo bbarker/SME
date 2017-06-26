@@ -1,7 +1,7 @@
 import LWJGLPlugin._
 
 val scalacMajor  = "2.11"
-val dottyVersion = "0.2.0-bin-20170620-1d05796-NIGHTLY"
+val dottyVersion = "0.2.0-bin-20170624-281416b-NIGHTLY"
 val lwjglVersion = "2.9.3"
 
 lazy val root = (project in file("."))

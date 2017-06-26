@@ -7,8 +7,14 @@ import com.jme3.input.Action
   */
 object Actions {
 
-  val Rotate: Action = Action("Rotate")
-  val Right:  Action = Action("Right")
+  //Used in HelloInput
   val Left:   Action = Action("Left")
   val Pause:  Action = Action("Pause")
+  val Right:  Action = Action("Right")
+  val Rotate: Action = Action("Rotate")
+
+  //Used in HelloAnimation
+  val Stand: Action = Action("stand")
+  val Walk: Action = Action("Walk")
+
 }

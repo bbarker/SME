@@ -1,7 +1,9 @@
 package com.jme3
 
+import com.jme3.scene.control.Control
+
 /**
-  * Created by brandon on 6/19/17.
+  * Created by Brandon Barker on 6/19/17.
   */
 package object scene {
 
@@ -13,5 +15,25 @@ package object scene {
     }
 
   }
+
+  object Node{
+
+    /**
+     * Constructor instantiates a new <code>Node</code> with a default empty
+     * list for containing children.
+     *
+     * @param name the name of the scene element. This is required for
+     * identification and comparison purposes.
+     */
+    def apply(name: String): Node = new Node(name)
+  }
+
+  implicit class NodeWrap(val uval: Node) extends AnyVal {
+  
+    def getControlMaybe[T <: Control](controlType: Class[T]): Option[T] = 
+      Option(uval.getControl(controlType))
+
+  }
+
 
 }
