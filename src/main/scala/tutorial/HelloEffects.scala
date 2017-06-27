@@ -13,7 +13,7 @@ class HelloEffects extends SimpleApplication {
 
   override def simpleInitApp: Unit = {
     val fire = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30)
-    val mat_red = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md")
+    val mat_red = Material(assetManager, "Common/MatDefs/Misc/Particle.j3md")
     mat_red.setTexture("Texture", assetManager.loadTexture( "Effects/Explosion/flame.png"))
     fire.setMaterial(mat_red)
     fire.setImagesX(2) 
@@ -30,7 +30,7 @@ class HelloEffects extends SimpleApplication {
     discard{ rootNode.attachChild(fire) }
  
     val debris = new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10)
-    val debris_mat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md")
+    val debris_mat = Material(assetManager, "Common/MatDefs/Misc/Particle.j3md")
     debris_mat.setTexture("Texture", assetManager.loadTexture( "Effects/Explosion/Debris.png"))
     debris.setMaterial(debris_mat)
     debris.setImagesX(3) 

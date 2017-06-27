@@ -1,5 +1,7 @@
 package tutorial
 
+import tutorial.Actions._
+
 import com.jme3.app.SimpleApplication
 import com.jme3.collision.CollisionResult
 import com.jme3.collision.CollisionResults
@@ -32,7 +34,7 @@ import scala.collection.JavaConverters._
 class HelloPicking extends SimpleApplication {
 
   protected lazy val shootables: Node = new Node("Shootables")
-  protected lazy val mark: Geometry = new Geometry("BOOM!", new Sphere(30, 30, 0.2f))
+  protected lazy val mark: Geometry = Geometry("BOOM!", new Sphere(30, 30, 0.2f))
 
   override def simpleInitApp: Unit = {
     initCrossHairs() // a "+" in the middle of the screen to help aiming
@@ -40,32 +42,33 @@ class HelloPicking extends SimpleApplication {
     initMark()       // a red sphere to mark the hit
  
     /** create four colored boxes and a floor to shoot at: */
-    discard{ rootNode.attachChild(shootables) }
-    discard{ shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f)) }
-    discard{ shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f)) }
-    discard{ shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f)) }
-    discard{ shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f)) }
-    discard{ shootables.attachChild(makeFloor()) }
-    discard{ shootables.attachChild(makeCharacter()) }
+    discard[Int]{ rootNode.attachChild(shootables) }
+    discard[Int]{ shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f)) }
+    discard[Int]{ shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f)) }
+    discard[Int]{ shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f)) }
+    discard[Int]{ shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f)) }
+    discard[Int]{ shootables.attachChild(makeFloor()) }
+    discard[Int]{ shootables.attachChild(makeCharacter()) }
   }
 
   /** Declaring the "Shoot" action and mapping to its triggers. */
   private def initKeys(): Unit = {
-    inputManager.addMapping("Shoot",
+    inputManager.addMapping(Shoot,
       new KeyTrigger(KeyInput.KEY_SPACE), // trigger 1: spacebar
       new MouseButtonTrigger(MouseInput.BUTTON_LEFT)) // trigger 2: left-button click
-    inputManager.addListener(actionListener, "Shoot")
+    inputManager.addListener(actionListener, Shoot)
   }
 
   protected val actionListener = new ActionListener {
     def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
-      if (name == "Shoot" && !keyPressed) {
+      if (name == Shoot.name && !keyPressed) {
         // 1. Reset results list.
         val results = new CollisionResults()
         // 2. Aim the ray from cam loc to cam direction.
         val ray = new Ray(cam.getLocation, cam.getDirection())
         // 3. Collect intersections between Ray and Shootables in results list.
-        discard{ shootables.collideWith(ray, results) }
+        // DO NOT check collision with the root node, or else ALL collisions will hit the skybox! 
+        discard[Int]{ shootables.collideWith(ray, results) }
         // 4. Print the results
         println("----- Collisions? " + results.size().toString + "-----")
         results.asScala.zipWithIndex.foreach { case (rr, ii) =>
@@ -82,21 +85,22 @@ class HelloPicking extends SimpleApplication {
           val closest = results.getClosestCollision
           // Let's interact - we mark the hit with a red dot.
           mark.setLocalTranslation(closest.getContactPoint)
-          discard{ rootNode.attachChild(mark) }
+          discard[Int]{ rootNode.attachChild(mark) }
         }
         else {
           // No hits? Then remove the red mark.
-          discard{ rootNode.detachChild(mark) }
+          discard[Int]{ rootNode.detachChild(mark) }
         }
       }
     }
   }
 
   /** A cube object for target practice */
-  protected def makeCube(name:String, x:Float, y:Float, z:Float): Geometry =  {
-    val box = new Box(1, 1, 1)
-    val cube = new Geometry(name, box)
-    val mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+  protected def makeCube(name: String, xx: Float, yy: Float, zz: Float): Geometry =  {
+    val box = Box(1, 1, 1)
+    val cube = Geometry(name, box)
+    cube.setLocalTranslation(xx, yy, zz)
+    val mat1 = Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat1.setColor("Color", ColorRGBA.randomColor())
     cube.setMaterial(mat1)
     cube
@@ -104,9 +108,9 @@ class HelloPicking extends SimpleApplication {
  
   /** A floor to show that the "shot" can go through several objects. */
   protected def makeFloor(): Geometry =  {
-    val box = new Box(15, .2f, 15)
-    val floor = new Geometry("the Floor", box)
-    val mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    val box = Box(15, .2f, 15)
+    val floor = Geometry("the Floor", box)
+    val mat1 = Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat1.setColor("Color", ColorRGBA.Gray)
     floor.setMaterial(mat1)
     floor
@@ -114,7 +118,7 @@ class HelloPicking extends SimpleApplication {
  
   /** A red ball that marks the last spot that was "hit" by the "shot". */
   protected def initMark(): Unit = {
-    val mark_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    val mark_mat = Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mark_mat.setColor("Color", ColorRGBA.Red)
     mark.setMaterial(mark_mat)
   }

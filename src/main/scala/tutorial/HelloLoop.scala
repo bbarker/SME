@@ -12,10 +12,10 @@ import com.jme3.syntax._
  * In this example, we make the player character rotate. */
 class HelloLoop extends SimpleApplication {
  
-  protected lazy val player: Geometry = new Geometry("blue cube", new Box(1, 1, 1))
+  protected lazy val player: Geometry = Geometry("blue cube", Box(1, 1, 1))
 
   override def simpleInitApp: Unit = {
-    val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    val mat = Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat)
     discard{ rootNode.attachChild(player)}

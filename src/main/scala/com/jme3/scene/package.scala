@@ -7,16 +7,21 @@ import com.jme3.scene.control.Control
   */
 package object scene {
 
-  implicit class SpatialWrap(val uval: Spatial) extends AnyVal {
+  object Geometry {
 
-    def toNode: Either[ClassCastException, Node] = uval match {
-      case ul: Node => Right(ul)
-      case ul => Left(new ClassCastException(s"Couldn't convert ${ul.getName} to Node"))
-    }
+  /**
+    * Create a geometry node with mesh data.
+    * The material of the geometry is null, it cannot
+    * be rendered until it is set.
+    *
+    * @param name The name of this geometry
+    * @param mesh The mesh data for this geometry
+    */
+    def apply(name: String, mesh: Mesh): Geometry = new Geometry(name, mesh)
 
   }
 
-  object Node{
+  object Node {
 
     /**
      * Constructor instantiates a new <code>Node</code> with a default empty
@@ -34,6 +39,15 @@ package object scene {
       Option(uval.getControl(controlType))
 
   }
+
+  implicit class SpatialWrap(val uval: Spatial) extends AnyVal {
+
+  def toNode: Either[ClassCastException, Node] = uval match {
+    case ul: Node => Right(ul)
+    case ul => Left(new ClassCastException(s"Couldn't convert ${ul.getName} to Node"))
+  }
+
+}
 
 
 }

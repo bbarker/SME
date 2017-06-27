@@ -16,14 +16,14 @@ class HelloAssets extends SimpleApplication {
  
   override def simpleInitApp: Unit = {
     val teapot = assetManager.loadModel("Models/Teapot/Teapot.obj")
-    val mat_default = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md")
+    val mat_default = Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md")
     teapot.setMaterial(mat_default)
     discard{ rootNode.attachChild(teapot) }
 
     // Create a wall with a simple texture from test_data
-    val box = new Box(2.5f,2.5f,1.0f)
-    val wall = new Geometry("Box", box )
-    val mat_brick = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    val box = Box(2.5f,2.5f,1.0f)
+    val wall = Geometry("Box", box )
+    val mat_brick = Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat_brick.setTexture("ColorMap", assetManager.loadTexture("Textures/Terrain/BrickWall/BrickWall.jpg"))
     wall.setMaterial(mat_brick)
     wall.setLocalTranslation(2.0f,-2.5f,0.0f)

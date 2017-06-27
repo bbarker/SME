@@ -20,13 +20,13 @@ class HelloAudio extends SimpleApplication {
     new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer)
   private val audio_nature:AudioNode = 
     new AudioNode(assetManager, "Sound/Environment/Nature.ogg", DataType.Stream)
-  private lazy val player: Geometry = new Geometry("Player", new Box(1, 1, 1))
+  private lazy val player: Geometry = Geometry("Player", Box(1, 1, 1))
 
   override def simpleInitApp: Unit = {
     flyCam.setMoveSpeed(40)
  
     /** just a blue box floating in space */
-    val mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    val mat1 = Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat1.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat1)
     discard{ rootNode.attachChild(player) }

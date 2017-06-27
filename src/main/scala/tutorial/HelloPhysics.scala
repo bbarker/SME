@@ -33,11 +33,11 @@ class HelloPhysics extends SimpleApplication {
 
  /** Prepare Materials */
   protected lazy val wall_mat: Material =
-    new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
   protected lazy val stone_mat: Material =
-    new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
   protected lazy val floor_mat: Material =
-    new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
  
   /** dimensions used for bricks and wall */
   private val brickLength = 0.48f
@@ -48,10 +48,10 @@ class HelloPhysics extends SimpleApplication {
   protected val sphere = new Sphere(32, 32, 0.4f, true, false)
   sphere.setTextureMode(TextureMode.Projected)
   /** Initialize the brick geometry */
-  protected val box = new Box(brickLength, brickHeight, brickWidth)
+  protected val box = Box(brickLength, brickHeight, brickWidth)
   box.scaleTextureCoordinates(new Vector2f(1f, .5f))
   /** Initialize the floor geometry */
-  protected val floor = new Box(10f, 0.1f, 5f)
+  protected val floor = Box(10f, 0.1f, 5f)
   floor.scaleTextureCoordinates(new Vector2f(3, 6))
 
   override def simpleInitApp: Unit = {
@@ -105,7 +105,7 @@ class HelloPhysics extends SimpleApplication {
  
   /** Make a solid floor and add it to the scene. */
   def initFloor(): Unit =  {
-    val floor_geo = new Geometry("Floor", floor)
+    val floor_geo = Geometry("Floor", floor)
     floor_geo.setMaterial(floor_mat)
     floor_geo.setLocalTranslation(0, -0.1f, 0)
     discard{ rootNode.attachChild(floor_geo) }
@@ -132,7 +132,7 @@ class HelloPhysics extends SimpleApplication {
   /** This method creates one individual physical brick. */
   def makeBrick(loc: Vector3f): Unit = {
     /** Create a brick geometry and attach to scene graph. */
-    val brick_geo = new Geometry("brick", box)
+    val brick_geo = Geometry("brick", box)
     brick_geo.setMaterial(wall_mat)
     discard{ rootNode.attachChild(brick_geo) }
     /** Position the brick geometry  */
@@ -149,7 +149,7 @@ class HelloPhysics extends SimpleApplication {
    * from the camera position in the camera direction.*/
   def makeCannonBall():Unit = {
     /** Create a cannon ball geometry and attach to scene graph. */
-    val ball_geo = new Geometry("cannon ball", sphere)
+    val ball_geo = Geometry("cannon ball", sphere)
     ball_geo.setMaterial(stone_mat)
     discard{ rootNode.attachChild(ball_geo) }
     /** Position the cannon ball  */

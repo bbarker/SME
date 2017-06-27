@@ -22,11 +22,11 @@ import com.jme3.syntax._
 /** Sample 5 - how to map keys and mousebuttons to actions */
 class HelloInput extends SimpleApplication {
  
-  protected lazy val player: Geometry = new Geometry("Player", new Box(1, 1, 1))
+  protected lazy val player: Geometry = Geometry("Player", Box(1, 1, 1))
   var isRunning: Boolean = true
 
   override def simpleInitApp: Unit = {
-    val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    val mat = Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Blue)
     player.setMaterial(mat)
     discard{ rootNode.attachChild(player) }

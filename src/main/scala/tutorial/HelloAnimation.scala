@@ -57,7 +57,7 @@ class HelloAnimation extends SimpleApplication with AnimEventListener {
 
     /* Skeleton debugger */
     val skeletonDebug = SkeletonDebugger("skeleton", control.getSkeleton)
-    val mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+    val mat = Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
     mat.setColor("Color", ColorRGBA.Green)
     mat.getAdditionalRenderState.setDepthTest(false)
     skeletonDebug.setMaterial(mat)

@@ -23,7 +23,7 @@ class HelloTerrain extends SimpleApplication {
 
   /** 1. Create terrain material and load four textures into it. */
   protected lazy val mat_terrain: Material =
-    new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md")
+    Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md")
 
   /** 2. Create the height map */
   protected lazy val heightMapImage =
