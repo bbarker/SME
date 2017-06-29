@@ -54,7 +54,7 @@ lazy val jmonkeyDeps = Seq(
       ,"org.jmonkeyengine" % "jme3-examples" % "3.1.0-stable" exclude("org.jmonkeyengine", "jme3-testdata")
       ,"org.jmonkeyengine" % "jme3-bullet" % "3.1.0-stable" exclude("org.jmonkeyengine", "jme3-testdata")
       ,"org.jmonkeyengine" % "jme3-bullet-native" % "3.1.0-stable" exclude("org.jmonkeyengine", "jme3-testdata")
-      ,"org.jmonkeyengine" % "jme3-jbullet" % "3.1.0-stable" exclude("org.jmonkeyengine", "jme3-testdata")
+//      ,"org.jmonkeyengine" % "jme3-jbullet" % "3.1.0-stable" exclude("org.jmonkeyengine", "jme3-testdata")
 //    ,"org.jmonkeyengine" % "jme3-testdata" % "3.1.0-stable" from "file://lib/jme3-testdata-3.1.0.jar"
       ,"org.lwjgl.lwjgl" % "lwjgl_util" % "2.9.3"
 //    ,"org.specs2" %% "specs2-core" % "3.8.9" % "it,test"

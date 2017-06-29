@@ -80,7 +80,7 @@ class HelloPicking extends SimpleApplication {
           println(s"  You shot $hit at $pt, $dist wu away.")
         }
         // 5. Use the results (we mark the hit object)
-        if (results.size() > 0) {
+        if (results.size > 0) {
           // The closest collision point is what was truly hit:
           val closest = results.getClosestCollision
           // Let's interact - we mark the hit with a red dot.
