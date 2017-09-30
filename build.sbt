@@ -46,7 +46,6 @@ lazy val root = (project in file("."))
     ,fullRunTask(TaskKey[Unit]("run-hello-physics"), Test, "tutorial.HelloPhysics")
 
   )
-  .enablePlugins(LWJGLPlugin)
 
 
 lazy val jmonkeyDeps = Seq(
