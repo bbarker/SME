@@ -64,7 +64,7 @@ class HelloCollision extends SimpleApplication with ActionListener {
     setUpLight()
  
     // We load the scene from the zip file and adjust its size.
-    assetManager.registerLocator("data/town.zip", classOf[ZipLocator])
+    assetManager.registerLocator("assets/town.zip", classOf[ZipLocator])
     sceneModel.setLocalScale(2f)
 
     sceneModel.addControl(landscape)
