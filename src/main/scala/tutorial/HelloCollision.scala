@@ -1,5 +1,7 @@
 package tutorial
 
+import tutorial.Actions._
+
 import com.jme3.app.SimpleApplication
 import com.jme3.asset.plugins.ZipLocator
 import com.jme3.bullet.BulletAppState
@@ -18,6 +20,7 @@ import com.jme3.math.Vector3f
 import com.jme3.scene.Node
 import com.jme3.scene.{Spatial, SpatialWrap}
 import com.jme3.syntax._
+import com.jme3.input.Action
  
 /**
  * Example 9 - How to make walls and floors solid.
@@ -32,8 +35,8 @@ class HelloCollision extends SimpleApplication with ActionListener {
   // compound collision shape and a static RigidBodyControl with mass zero.
   private lazy val sceneShape = CollisionShapeFactory.createMeshShape(
     sceneModel.toNode match {
-      case Right(node) => node
-      case Left(ex) => throw new NotImplementedError("No fallback sceneshape")
+      case util.Right(node) => node
+      case util.Left(ex) => throw new NotImplementedError("No fallback sceneshape")
     }
   )
   private lazy val landscape: RigidBodyControl = new RigidBodyControl(sceneShape, 0)
@@ -96,26 +99,27 @@ class HelloCollision extends SimpleApplication with ActionListener {
   /** We over-write some navigational key mappings here, so we can
    * add physics-controlled walking and jumping: */
   private def setUpKeys(): Unit = {
-    inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A))
-    inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D))
-    inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_W))
-    inputManager.addMapping("Down", new KeyTrigger(KeyInput.KEY_S))
-    inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE))
-    inputManager.addListener(this, "Left")
-    inputManager.addListener(this, "Right")
-    inputManager.addListener(this, "Up")
-    inputManager.addListener(this, "Down")
-    inputManager.addListener(this, "Jump")
+    inputManager.addMapping(Left, new KeyTrigger(KeyInput.KEY_A))
+    inputManager.addMapping(Right, new KeyTrigger(KeyInput.KEY_D))
+    inputManager.addMapping(Up, new KeyTrigger(KeyInput.KEY_W))
+    inputManager.addMapping(Down, new KeyTrigger(KeyInput.KEY_S))
+    inputManager.addMapping(Jump, new KeyTrigger(KeyInput.KEY_SPACE))
+    inputManager.addListener(this, Left)
+    inputManager.addListener(this, Right)
+    inputManager.addListener(this, Up)
+    inputManager.addListener(this, Down)
+    inputManager.addListener(this, Jump)
   }
  
   /** These are our custom actions triggered by key presses.
    * We do not walk yet, we just keep track of the direction the user pressed. */
-  def onAction(binding:String, value:Boolean, tpf:Float): Unit = binding match {
-    case "Left" => left = value
-    case "Right" => right = value 
-    case "Up" => up = value 
-    case "Down" => down = value
-    case "Jump" => player.jump()
+  def onAction(binding: String, value: Boolean, tpf: Float): Unit = 
+    Action(binding) match {
+      case Left => left = value
+      case Right => right = value
+      case Up => up = value
+      case Down => down = value
+      case Jump => player.jump()
   }
  
   /**
