@@ -31,9 +31,9 @@ class HelloCollision extends SimpleApplication with ActionListener {
   // We set up collision detection for the scene by creating a
   // compound collision shape and a static RigidBodyControl with mass zero.
   private lazy val sceneShape = CollisionShapeFactory.createMeshShape(
-    sceneModel.toNode.right.toOption  match {
-      case Some(node) => node
-      case None => throw new NotImplementedError("No fallback sceneshape")
+    sceneModel.toNode match {
+      case Right(node) => node
+      case Left(ex) => throw new NotImplementedError("No fallback sceneshape")
     }
   )
   private lazy val landscape: RigidBodyControl = new RigidBodyControl(sceneShape, 0)

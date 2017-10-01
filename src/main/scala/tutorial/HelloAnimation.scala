@@ -30,9 +30,9 @@ import scala.collection.JavaConverters._
 class HelloAnimation extends SimpleApplication with AnimEventListener {
 
   lazy val player: Node = assetManager.loadModel("Models/Oto/Oto.mesh.xml")
-    .toNode.right.toOption match {
-      case Some(node) => node
-      case None => Node("Player Fallback")
+    .toNode match {
+      case util.Right(node) => node
+      case util.Left(ex) => Node("Player Fallback")
     }
 
   private lazy val control: AnimControl = 
