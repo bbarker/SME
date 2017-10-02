@@ -50,10 +50,15 @@ class HelloCollision extends SimpleApplication with ActionListener {
 
   private lazy val  player: CharacterControl = new CharacterControl(capsuleShape, 0.05f)
   private var walkDirection = new Vector3f
-  private var left: Boolean = false
-  private var right: Boolean = false
-  private var up: Boolean = false
-  private var down: Boolean = false
+
+  case class CardinalDirection(
+    left: Boolean  = false, 
+    right: Boolean = false, 
+    up: Boolean    = false, 
+    down: Boolean  = false
+  )
+
+  private var characterDirection = CardinalDirection()
 
   override def simpleInitApp: Unit = {
     /** Set up Physics */
@@ -115,10 +120,10 @@ class HelloCollision extends SimpleApplication with ActionListener {
    * We do not walk yet, we just keep track of the direction the user pressed. */
   def onAction(binding: String, value: Boolean, tpf: Float): Unit = 
     Action(binding) match {
-      case Left => left = value
-      case Right => right = value
-      case Up => up = value
-      case Down => down = value
+      case Left => characterDirection = characterDirection.copy(left = value)
+      case Right => characterDirection = characterDirection.copy(right = value)
+      case Up => characterDirection = characterDirection.copy(up = value)
+      case Down => characterDirection = characterDirection.copy(down = value)
       case Jump => player.jump()
   }
  
@@ -133,10 +138,10 @@ class HelloCollision extends SimpleApplication with ActionListener {
     val camDir = cam.getDirection().clone().multLocal(0.6f)
     val camLeft = cam.getLeft().clone().multLocal(0.4f)
     discard{ walkDirection.set(0, 0, 0) }
-    if (left)  { discard{ walkDirection.addLocal(camLeft) } }
-    if (right) { discard{ walkDirection.addLocal(camLeft.negate()) } }
-    if (up)    { discard{ walkDirection.addLocal(camDir) } }
-    if (down)  { discard{ walkDirection.addLocal(camDir.negate()) } }
+    if (characterDirection.left)  { discard{ walkDirection.addLocal(camLeft) } }
+    if (characterDirection.right) { discard{ walkDirection.addLocal(camLeft.negate()) } }
+    if (characterDirection.up)    { discard{ walkDirection.addLocal(camDir) } }
+    if (characterDirection.down)  { discard{ walkDirection.addLocal(camDir.negate()) } }
     player.setWalkDirection(walkDirection)
     cam.setLocation(player.getPhysicsLocation())
   }
