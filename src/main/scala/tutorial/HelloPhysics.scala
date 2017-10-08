@@ -1,5 +1,7 @@
 package tutorial
 
+import tutorial.Actions._
+
 import com.jme3.app.SimpleApplication
 import com.jme3.asset.TextureKey
 import com.jme3.bullet.BulletAppState
@@ -55,6 +57,10 @@ class HelloPhysics extends SimpleApplication {
   floor.scaleTextureCoordinates(new Vector2f(3, 6))
 
   override def simpleInitApp: Unit = {
+
+    // For debugging, shows collision shape:
+    // bulletAppState.setDebugEnabled(true);
+
     /** Set up Physics Game */
     discard{ stateManager.attach(bulletAppState) }
     //bulletAppState.getPhysicsSpace().enableDebug(assetManager)
@@ -63,8 +69,8 @@ class HelloPhysics extends SimpleApplication {
     cam.setLocation(new Vector3f(0, 4f, 6f))
     cam.lookAt(new Vector3f(2, 2, 0), Vector3f.UNIT_Y)
     /** Add InputManager action: Left click triggers shooting. */
-    inputManager.addMapping("shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT))
-    inputManager.addListener(actionListener, "shoot")
+    inputManager.addMapping(Shoot, new MouseButtonTrigger(MouseInput.BUTTON_LEFT))
+    inputManager.addListener(actionListener, Shoot)
     /** Initialize the scene, materials, and physics space */
     initMaterials()
     initWall()
@@ -78,7 +84,7 @@ class HelloPhysics extends SimpleApplication {
   */
   protected val actionListener = new ActionListener {
     def onAction(name: String, keyPressed:Boolean, tpf:Float):Unit = {
-      if (name == "shoot" && !keyPressed) {
+      if (name == Shoot.name && !keyPressed) {
         makeCannonBall()
       }
     }
@@ -119,9 +125,9 @@ class HelloPhysics extends SimpleApplication {
   def initWall(): Unit =  {
     var startpt = brickLength / 4
     var height = 0f
-    for (j <- 0 until 15) {
-      for (i <- 0 until 6) {
-        val vt = new Vector3f(i * brickLength * 2 + startpt, brickHeight + height, 0)
+    for (jj <- 0 until 15) {
+      for (ii <- 0 until 6) {
+        val vt = new Vector3f(ii * brickLength * 2 + startpt, brickHeight + height, 0)
         makeBrick(vt)
       }
       startpt = -startpt
@@ -147,7 +153,7 @@ class HelloPhysics extends SimpleApplication {
   /** This method creates one individual physical cannon ball.
    * By defaul, the ball is accelerated and flies
    * from the camera position in the camera direction.*/
-  def makeCannonBall():Unit = {
+  def makeCannonBall(): Unit = {
     /** Create a cannon ball geometry and attach to scene graph. */
     val ball_geo = Geometry("cannon ball", sphere)
     ball_geo.setMaterial(stone_mat)
@@ -164,7 +170,7 @@ class HelloPhysics extends SimpleApplication {
   }
  
   /** A plus sign used as crosshairs to help the player with aiming.*/
-  protected def initCrossHairs():Unit = {
+  protected def initCrossHairs(): Unit = {
     guiNode.detachAllChildren()
     guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt")
     val ch = new BitmapText(guiFont, false)

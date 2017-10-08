@@ -20,7 +20,7 @@ object Actions {
   val Stand: Action = Action("stand")
   val Walk: Action = Action("Walk")
 
-  //Used in HelloPicking
+  //Used in HelloPicking, HelloAudio, HelloPhysics
   val Shoot: Action = Action("Shoot")
 
 }

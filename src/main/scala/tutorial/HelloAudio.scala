@@ -1,5 +1,7 @@
 package tutorial
 
+import tutorial.Actions._
+
 import com.jme3.app.SimpleApplication
 import com.jme3.audio.AudioNode
 import com.jme3.audio.AudioData.DataType
@@ -54,21 +56,21 @@ class HelloAudio extends SimpleApplication {
  
   /** Declaring "Shoot" action, mapping it to a trigger (mouse click). */
   private def initKeys(): Unit = {
-    inputManager.addMapping("Shoot", new MouseButtonTrigger(0))
-    inputManager.addListener(actionListener, "Shoot")
+    inputManager.addMapping(Shoot, new MouseButtonTrigger(0))
+    inputManager.addListener(actionListener, Shoot)
   }
  
   /** Defining the "Shoot" action: Play a gun sound. */
   protected val actionListener = new ActionListener {
-    override def onAction(name:String, keyPressed:Boolean, tpf:Float): Unit = {
-      if (name.equals("Shoot") && !keyPressed) {
+    override def onAction(name: String, keyPressed: Boolean, tpf: Float): Unit = {
+      if (name == Shoot.name && !keyPressed) {
         audio_gun.playInstance() // play each instance once!
       }
     }
   }
  
   /** Move the listener with the a camera - for 3D audio. */
-  override def simpleUpdate(tpf:Float): Unit =  {
+  override def simpleUpdate(tpf: Float): Unit = {
     listener.setLocation(cam.getLocation)
     listener.setRotation(cam.getRotation)
   }
