@@ -16,10 +16,10 @@ import com.jme3.syntax._
 /** Sample 11 - playing 3D audio. */
 class HelloAudio extends SimpleApplication {
 
-  private val audio_gun: AudioNode = 
+  private lazy val audio_gun: AudioNode = 
     new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer)
-  private val audio_nature:AudioNode = 
-    new AudioNode(assetManager, "Sound/Environment/Nature.ogg", DataType.Stream)
+  private lazy val audio_nature:AudioNode = 
+    new AudioNode(assetManager, "Sound/Environment/Ocean Waves.ogg", DataType.Stream)
   private lazy val player: Geometry = Geometry("Player", Box(1, 1, 1))
 
   override def simpleInitApp: Unit = {

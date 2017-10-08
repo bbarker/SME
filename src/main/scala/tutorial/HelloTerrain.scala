@@ -3,7 +3,6 @@ package tutorial
 import com.jme3.app.SimpleApplication
 import com.jme3.material.Material
 import com.jme3.terrain.geomipmap.TerrainLodControl
-import com.jme3.terrain.heightmap.AbstractHeightMap
 import com.jme3.terrain.geomipmap.TerrainQuad
 import com.jme3.terrain.geomipmap.lodcalc.DistanceLodCalculator
 import com.jme3.terrain.heightmap.HillHeightMap // for exercise 2
@@ -28,8 +27,7 @@ class HelloTerrain extends SimpleApplication {
   /** 2. Create the height map */
   protected lazy val heightMapImage =
     assetManager.loadTexture("Textures/Terrain/splat/mountains512.png")
-  //    val heightmap = new ImageBasedHeightMap(ImageToAwt.convert(heightMapImage.getImage(), false, true, 0))
-  protected lazy val heightmap = new ImageBasedHeightMap(heightMapImage.getImage)
+    protected lazy val heightmap = new ImageBasedHeightMap(heightMapImage.getImage)
 
   /** 3. We have prepared material and heightmap.
     * Now we create the actual terrain:
