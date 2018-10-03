@@ -9,3 +9,5 @@ data
 .idea
 *~
 .dotty-ide*
+
+*.dll
