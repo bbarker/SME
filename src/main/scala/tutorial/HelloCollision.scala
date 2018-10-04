@@ -79,7 +79,7 @@ class HelloCollision extends SimpleApplication with ActionListener {
 
     player.setJumpSpeed(20)
     player.setFallSpeed(30)
-    player.setGravity(30)
+    player.setGravity(new Vector3f(0,-30f,0))
     player.setPhysicsLocation(new Vector3f(0, 10, 0))
  
     // We attach the scene and the player to the rootNode and the physics space,
@@ -124,7 +124,7 @@ class HelloCollision extends SimpleApplication with ActionListener {
       case Right => characterDirection = characterDirection.copy(right = value)
       case Up => characterDirection = characterDirection.copy(up = value)
       case Down => characterDirection = characterDirection.copy(down = value)
-      case Jump => player.jump()
+      case Jump =>  if (value) { player.jump(new Vector3f(0,20f,0));}
   }
  
   /**
