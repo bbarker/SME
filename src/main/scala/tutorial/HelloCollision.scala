@@ -124,7 +124,7 @@ class HelloCollision extends SimpleApplication with ActionListener {
       case Right => characterDirection = characterDirection.copy(right = value)
       case Up => characterDirection = characterDirection.copy(up = value)
       case Down => characterDirection = characterDirection.copy(down = value)
-      case Jump =>  if (value) { player.jump(new Vector3f(0,20f,0));}
+      case Jump =>  if (value) { player.jump(new Vector3f(0,20f,0)) }
   }
  
   /**
